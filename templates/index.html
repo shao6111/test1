@@ -4,90 +4,59 @@
   <meta charset="UTF-8">
   <title>租客資料管理</title>
   <style>
-    body { background-color: #e6f2ff; font-family: Arial, sans-serif; font-size: 20px; }
-    .container { width: 80%; margin: auto; text-align: center; }
-    form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; justify-items: center; margin-bottom: 20px; }
-    form div { display: flex; flex-direction: column; align-items: flex-start; width: 90%; }
-    input, button { font-size: 18px; padding: 5px; border-radius: 8px; border: 1px solid #ccc; }
-    button { background-color: #4CAF50; color: white; cursor: pointer; }
-    button:hover { background-color: #45a049; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-    th { background-color: #4CAF50; color: white; }
-    .search-box { margin: 20px 0; }
+    body { background: #dff0ff; font-family: Arial; text-align: center; }
+    .buttons { margin: 20px; }
+    .buttons a {
+      display: inline-block; width: 200px;
+      margin: 20px; padding: 25px;
+      font-size: 22px; text-align: center;
+      background: #4CAF50; color: white;
+      text-decoration: none; border-radius: 12px;
+    }
+    .buttons a:hover { background: #45a049; }
+    table { width: 95%; margin: auto; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #4CAF50; color: white; }
+    tr:nth-child(even) { background: #f9f9f9; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>租客資料列表</h1>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="搜尋姓名或電話..." onkeyup="filterTable()">
-    </div>
-    <form action="/add" method="post" enctype="multipart/form-data"> 
-      <div>姓名: <input type="text" name="name" required></div>
-      <div>房間號: <input type="text" name="phone"></div>
-      <div>手機: <input type="text" name="mobile"></div>
-      <div>身分證字號: <input type="text" name="id_number"></div>
-      <div>戶籍地址: <input type="text" name="address"></div>
-      <div>入住日期: <input type="date" name="move_in_date"></div>
-      <div>租金: <input type="number" name="rent"></div>
-      <div>押金: <input type="number" name="deposit"></div>
-      <div>電表啟用度數: <input type="number" name="electricity_start"></div>
-      <div>契約書: <input type="file" name="contract"></div>
-      <div style="grid-column: span 2; text-align:center;">
-        <button type="submit">新增租客</button>
-      </div>
-    </form>
-    <hr>
-    <table id="tenantTable">
-      <tr>
-        <th>姓名</th><th>電話</th><th>手機</th><th>身分證</th><th>戶籍地址</th>
-        <th>入住日期</th><th>租金</th><th>押金</th><th>電表度數</th><th>契約書</th><th>操作</th>
-      </tr>
-      {% for t in tenants %}
-      <tr>
-        <td>{{ t.name }}</td>
-        <td>{{ t.phone }}</td>
-        <td>{{ t.mobile }}</td>
-        <td>{{ t.id_number }}</td>
-        <td>{{ t.address }}</td>
-        <td>{{ t.move_in_date }}</td>
-        <td>{{ t.rent }}</td>
-        <td>{{ t.deposit }}</td>
-        <td>{{ t.electricity_start }}</td>
-        <td>
-          {% if t.contract %}
-            <a href="/contracts/{{ t.contract }}">下載</a>
-          {% endif %}
-        </td>
-        <td>
-          <a href="/edit/{{ t.id }}">編輯</a>
-          <form action="/delete/{{ t.id }}" method="post" style="display:inline;">
-            <button type="submit">刪除</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+  <h1>租客資料管理首頁</h1>
+  <div class="buttons">
+    <a href="/add">新增租客資料</a>
+    <a href="#tenantTable">刪除租客資料</a>
+    <a href="#tenantTable">修改租客資料</a>
   </div>
-  <script>
-    function filterTable() {
-      var input = document.getElementById("searchInput");
-      var filter = input.value.toLowerCase();
-      var table = document.getElementById("tenantTable");
-      var tr = table.getElementsByTagName("tr");
-      for (var i = 1; i < tr.length; i++) {
-        var tdArray = tr[i].getElementsByTagName("td");
-        var match = false;
-        for (var j = 0; j < tdArray.length; j++) {
-          if (tdArray[j].innerText.toLowerCase().indexOf(filter) > -1) {
-            match = true;
-            break;
-          }
-        }
-        tr[i].style.display = match ? "" : "none";
-      }
-    }
-  </script>
+  <table id="tenantTable">
+    <tr>
+      <th>姓名</th><th>房間號</th><th>手機</th><th>身分證字號</th>
+      <th>戶籍地址</th><th>入住日期</th><th>租金</th><th>押金</th>
+      <th>電表啟用度數</th><th>契約書</th><th>操作</th>
+    </tr>
+    {% for t in tenants %}
+    <tr>
+      <td>{{ t.name }}</td>
+      <td>{{ t.room }}</td>
+      <td>{{ t.mobile }}</td>
+      <td>{{ t.id_number }}</td>
+      <td>{{ t.address }}</td>
+      <td>{{ t.move_in_date }}</td>
+      <td>{{ t.rent }}</td>
+      <td>{{ t.deposit }}</td>
+      <td>{{ t.electricity_start }}</td>
+      <td>{% if t.contract %}<a href="/contracts/{{ t.contract }}">下載</a>{% endif %}</td>
+      <td>
+        <a href="/edit/{{ t.id }}">編輯</a>
+        <form action="/delete/{{ t.id }}" method="post" style="display:inline;">
+          <button type="submit">刪除</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
+
+
+       
+ 
