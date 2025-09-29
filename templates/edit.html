@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>編輯租客資料</title>
+  <style>
+    body { background-color: #e6f2ff; font-family: Arial, sans-serif; font-size: 20px; }
+    .container { width: 60%; margin: auto; text-align: center; }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; justify-items: center; }
+    form div { display: flex; flex-direction: column; align-items: flex-start; width: 90%; }
+    input, button { font-size: 18px; padding: 5px; border-radius: 8px; border: 1px solid #ccc; }
+    button { background-color: #4CAF50; color: white; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>編輯租客資料</h1>
+    <form action="/edit/{{ tenant.id }}" method="post" enctype="multipart/form-data">
+      <div>姓名: <input type="text" name="name" value="{{ tenant.name }}" required></div>
+      <div>電話: <input type="text" name="phone" value="{{ tenant.phone }}"></div>
+      <div>手機: <input type="text" name="mobile" value="{{ tenant.mobile }}"></div>
+      <div>身分證字號: <input type="text" name="id_number" value="{{ tenant.id_number }}"></div>
+      <div>戶籍地址: <input type="text" name="address" value="{{ tenant.address }}"></div>
+      <div>入住日期: <input type="date" name="move_in_date" value="{{ tenant.move_in_date }}"></div>
+      <div>租金: <input type="number" name="rent" value="{{ tenant.rent }}"></div>
+      <div>押金: <input type="number" name="deposit" value="{{ tenant.deposit }}"></div>
+      <div>電表啟用度數: <input type="number" name="electricity_start" value="{{ tenant.electricity_start }}"></div>
+      <div>契約書: <input type="file" name="contract"></div>
+      <div style="grid-column: span 2; text-align:center;">
+        <button type="submit">更新資料</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
