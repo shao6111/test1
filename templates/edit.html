@@ -18,7 +18,7 @@
     <h1>編輯租客資料</h1>
     <form action="/edit/{{ tenant.id }}" method="post" enctype="multipart/form-data">
       <div>姓名: <input type="text" name="name" value="{{ tenant.name }}" required></div>
-      <div>電話: <input type="text" name="phone" value="{{ tenant.phone }}"></div>
+      <div>房間號: <input type="text" name="phone" value="{{ tenant.phone }}"></div>
       <div>手機: <input type="text" name="mobile" value="{{ tenant.mobile }}"></div>
       <div>身分證字號: <input type="text" name="id_number" value="{{ tenant.id_number }}"></div>
       <div>戶籍地址: <input type="text" name="address" value="{{ tenant.address }}"></div>
@@ -33,4 +33,5 @@
     </form>
   </div>
 </body>
+
 </html>
