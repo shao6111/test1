@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>登入</title>
+  <style>
+    body { background-color: #eef; font-family: Arial; }
+    .login-box { width: 300px; margin: 100px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px gray; }
+    input { width: 90%; padding: 8px; margin: 8px 0; }
+    button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #45a049; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>租客資料管理系統</h2>
+    <form method="post">
+      <input type="text" name="username" placeholder="帳號" required>
+      <input type="password" name="password" placeholder="密碼" required>
+      <button type="submit">登入</button>
+    </form>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  </div>
+</body>
+</html>
